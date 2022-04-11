@@ -1,58 +1,50 @@
 package application;
 
+import java.io.FileNotFoundException;
+
 import javafx.application.Application;
+import javafx.beans.binding.BooleanExpression;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
+	final int WIDTH = 600;
+	final int HEIGHT = 600;
+	int clickCount = 0;
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			// LineGrid lGrid = new LineGrid(0,0,0,100,10);
-			StackPane pane = new StackPane();
-			Scene scene = new Scene(pane, 400, 400);
+			LineGrid lines = new LineGrid(WIDTH, HEIGHT);
+			GamePiece img = new GamePiece(WIDTH / 3);
 
-			// scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			Group root = new Group();
 
-			/*
-			 * Button button = new Button(); button.setOnAction(this);
-			 * button.setText("Click me"); pane.getChildren().add(button);
-			 */
-
-			float startX, startY;
-
-			Line line1 = new Line(1, 0, 100, pane.getHeight());
-			//line1.setS
-			//line1.setTranslateX(100);
-	        //line1.setTranslateY(100);
-			/*Line line2 = new Line();
-			Line line3 = new Line();
-			Line line4 = new Line();*/
+			for (int i = 0; i < lines.grid().size(); i++) {
+				root.getChildren().add(lines.grid().get(i));
+			}
 			
-			pane.getChildren().add(line1);
+			
+			root.getChildren().add(img.placeImgs());
 
-			/*line2.setStartX(2.0 * pane.getWidth() / 3.0);
-			line2.setStartY(0);
-			line2.setEndX(2.0 * pane.getWidth() / 3.0);
-			line2.setEndY(pane.getHeight());*/
-			//pane.getChildren().add(line2);
-
-			/*
-			 * line3.setStartX(0); line3.setStartY(0); line3.setEndX(0); line3.setEndY(100);
-			 * 
-			 * line4.setStartX(0); line4.setStartY(0); line4.setEndX(0); line4.setEndY(100);
-			 */
+			Scene scene = new Scene(root, WIDTH, HEIGHT);
 
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("Tic Tac Toe");
+
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
